@@ -45,6 +45,17 @@ Structure of dist folder:
 
 ```
 
+## Docker
+```bash
+
+## Build Docker Image for combined Angular + Node project
+docker build . --tag test/appname:v0.0.1
+
+## Run image
+docker run -it -p 8080:8080 "test/appname:v0.0.1"
+
+```
+
 ## Note
 
 All html and css are from: http://www.w3schools.com/howto/
