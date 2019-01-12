@@ -17,8 +17,8 @@
 ## Install / Development
 
 ```bash
-git clone https://github.com/vladotesanovic/angular2-express-starter
-cd angular2-express-starter
+git clone https://github.com/joshisa/angular-node-icp
+cd angular-node-icp
 
 # Install dependencies
 npm install

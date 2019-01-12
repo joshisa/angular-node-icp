@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angularnode-deployment
+  namespace: default
+  labels:
+    app: angularnode
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: angularnode
+  template:
+    metadata:
+      labels:
+        app: angularnode
+    spec:
+      containers:
+      - name: angularnode
+        image: mycluster.icp:8500/default/angularnode:v1.0.0
+        imagePullPolicy: Always
+        env:
+        - name: EXAMPLE_ENV_VAR
+          value: "false"
+        ports:
+        - containerPort: 3000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: angularnode-svc
+  namespace: default
+spec:
+  selector:
+    app: angularnode
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/add-base-url: "true"
+    ingress.kubernetes.io/rewrite-target: /
+  name: angularnode-ingress
+  namespace: default
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: angularnode-svc
+          servicePort: 8080
+        path: /angularnode
+status: {}
